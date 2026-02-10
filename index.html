@@ -63,8 +63,9 @@
                             </div>
                             <div class="grid grid-cols-2 gap-3">
                                 <div>
-                                    <label class="block text-xs font-semibold text-slate-500 mb-1">Data</label>
-                                    <input v-model="formData.date" class="w-full p-2 border border-slate-300 rounded focus:ring-2 focus:ring-blue-500 outline-none">
+                                    <!-- ATUALIZAÇÃO: Campo data agora tem hint de opcional -->
+                                    <label class="block text-xs font-semibold text-slate-500 mb-1">Data <span class="text-slate-400 font-normal text-[10px]">(Deixe vazio para ocultar)</span></label>
+                                    <input v-model="formData.date" placeholder="Ex: 21/09/2024" class="w-full p-2 border border-slate-300 rounded focus:ring-2 focus:ring-blue-500 outline-none">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-semibold text-slate-500 mb-1">Local</label>
@@ -173,7 +174,10 @@
                     stops: [
                         { time: '09:00', city: 'ARARAQUARA', location: 'Rodoviária (parte de cima)', returnLoc: 'Retorno no mesmo local' },
                         { time: '09:25', city: 'IBATÉ', location: 'Rotatória do rodeio', returnLoc: 'Retorno no mesmo local' },
-                        { time: '09:45', city: 'SÃO CARLOS', location: 'Hospital Universitário', returnLoc: 'Retorno no mesmo local' },
+                        { time: '09:45', city: 'SÃO CARLOS', location: 'Hospital Universitário (portaria principal)', returnLoc: 'Retorno no mesmo local' },
+                        { time: '10:40', city: 'RIO CLARO', location: 'Viviane Veículos', returnLoc: 'Retorno na Rodoviária' },
+                        { time: '11:15', city: 'LIMEIRA', location: 'Graal Topázio', returnLoc: 'Retorno no Graal Castelo' },
+                        { time: '12:30', city: 'REGIÃO DE CAMPINAS', location: 'Shopping SerrAzul (Shell)', returnLoc: 'Retorno no Posto SerrAzul' },
                     ],
                     showTitle: 'A Lenda do Rock Retorna',
                     showDescription: 'A lendária banda continua sua trajetória de sucesso. Nomeada em homenagem ao mais recente álbum de estúdio da banda — que alcançou o 1º lugar em 21 países — esta turnê levará a banda a alguns dos maiores estádios do continente.',
@@ -235,6 +239,7 @@
 
                     let notesHtml = formData.value.importantNotes.map(note => `<p style="margin: 5px 0;">❌ ${note}</p>`).join('');
 
+                    // ATUALIZAÇÃO: Condicional para exibir a data somente se estiver preenchida
                     return `
 <div style="font-family: ${t.font}; line-height: 1.6; color: #333; max-width: 800px; margin: auto; border: 1px solid #eee; padding: 20px; border-radius: 10px; background-color: ${t.colors.bg};">
 
@@ -243,7 +248,7 @@
        ${t.icons.title} Informações do Show
     </h2>
     <p><strong>Evento:</strong> ${formData.value.eventName}</p>
-    <p><strong>Data da Viagem:</strong> ${formData.value.date}</p>
+    ${formData.value.date ? `<p><strong>Data da Viagem:</strong> ${formData.value.date}</p>` : ''}
     <p><strong>Local do Evento:</strong> ${formData.value.location}</p>
     
     <p style="background-color: ${t.colors.lightBg}; padding: 15px; border-left: 5px solid ${t.colors.accent}; border-radius: 4px; font-style: italic;">
